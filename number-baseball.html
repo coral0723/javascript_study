@@ -40,7 +40,7 @@
     }
     return true;
   }
-  
+  let out = 0;
   $form.addEventListener('submit', (event) => { //form의 기본동작은 새로고침이다.
     event.preventDefault(); // 기본 동작 막기(새로고침 하면 변수들이 날아가니까 막아주기)
     const value = $input.value;
@@ -71,7 +71,17 @@
         }
       }
     }
-    $logs.append(`${value}: ${strike} 스트라이크 ${ball} 볼`, document.createElement('br'));
+    if (strike === 0 && ball === 0) {
+      out += 1;
+      if (out === 3) {
+        $logs.append(`3 아웃! 정답은 ${answer.join('')}`);
+        return;
+      } else {
+        $logs.append(`${value}: ${out} 아웃`, document.createElement('br'));
+      }
+    } else {
+      $logs.append(`${value}: ${strike} 스트라이크 ${ball} 볼`, document.createElement('br'));
+    }
     tries.push(value);
   });
 
