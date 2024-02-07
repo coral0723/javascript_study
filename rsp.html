@@ -52,7 +52,8 @@
     scissors: 1,
     paper: -1,
   };
-  let score = 0;
+  let computer = 0;
+  let me = 0;
   let clickable = true; //여러번 클릭할 때 생기는 버그 방지
   const clickButton = () => {
     if (clickable) {
@@ -70,19 +71,25 @@
 
       let message;
       if ([2, -1].includes(diff)) {
-        score += 1;
+        me += 1;
         message = '승리';
       }else if ([-2, 1].includes(diff))  {
-        score -= 1;
+        computer += 1;
         message = '패배';
       } else {
         message = '무승부';
       }
-      $score.textContent = `${message} 총: ${score}점`;
-      setTimeout(() => {
-        clickable = true;
-        intervalId = setInterval(changeComputerHand, 50);
-      }, 1000);
+      if (me >= 3) {
+        $score.textContent = `나의 승리 ${me}:${computer}`;
+      } else if (computer >= 3) {
+        $score.textContent = `컴퓨터의 승리 ${me}:${computer}`;
+      } else {
+        $score.textContent = `${message} ${me}:${computer}`;
+        setTimeout(() => {
+          clickable = true;
+          intervalId = setInterval(changeComputerHand, 50);
+        }, 1000);
+      }
     }
   };
   $rock.addEventListener('click', clickButton);
